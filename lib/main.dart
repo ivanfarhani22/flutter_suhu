@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'package:provider/provider.dart';
+import 'auth_provider.dart';
+import 'temperature_provider.dart';
 import 'login_page.dart';
 
 void main() {
@@ -11,23 +13,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Kalkulator Suhu Pro',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Poppins',
-        useMaterial3: true,
-        brightness: Brightness.light,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthState()),
+        ChangeNotifierProvider(create: (context) => TemperatureState()),
+      ],
+      child: MaterialApp(
+        title: 'Kalkulator Suhu',
+        theme: ThemeData(
+          primaryColor: const Color(0xFF4A4A4A),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFFBF9456),
+          ),
+          useMaterial3: true,
+        ),
+        home: const LoginPage(),
       ),
-      darkTheme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Poppins',
-        useMaterial3: true,
-        brightness: Brightness.dark,
-      ),
-      themeMode: ThemeMode.system,
-      home: const LoginPage(), // Ubah home menjadi LoginPage
     );
   }
 }
